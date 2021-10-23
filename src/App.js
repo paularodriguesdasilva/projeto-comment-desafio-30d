@@ -1,23 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import ImgPeople from "./img/people.svg";
 
 function App() {
+  // estados=> variável, que vai permitir atualizar os itens na tela
+  const [comment, setComment] = React.useState();
+  const [allComments, setAllComments] = React.useState([]);
+
+  function writtenInTextarea(eventTextarea) {
+    setComment(eventTextarea.target.value);
+  }
+
+  function buttonClick() {
+    const allPreviousComments = [...allComments, comment];
+
+    setAllComments(allPreviousComments);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <img src={ImgPeople} alt="imagem-pessoas" />
+      <textarea
+        onChange={writtenInTextarea}
+        placeholder="Seu comentário aqui..."
+      ></textarea>
+      <button onClick={buttonClick}>Comentar</button>
+      <ul>
+        {allComments.map((comment) => (
+          <li key={comment}>{comment}</li>
+        ))}
+      </ul>
     </div>
   );
 }
